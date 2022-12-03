@@ -27,6 +27,14 @@
     "vite": "^3.2.3"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@fontsource/roboto": "^4.5.8",
+    "@mui/material": "^5.10.16",
+    "@tanstack/react-query": "^4.19.0",
+    "@types/cors": "^2.8.12",
+    "axios": "^1.2.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "react": "^18.2.0",
