@@ -15,7 +15,7 @@ if (isProd) {
   app.use(express.static("build/public"));
 } else {
   // when not in prod, we want to use the hot reload version of the frontend,
-  // this will point to that, but it also has to be running on a different port than backend
+  // this will point to the locally running frontend
   app.use("/", (req, res) => {
     res.redirect(`http://localhost:${process.env.DEV_FRONTEND_PORT}`);
   });
