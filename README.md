@@ -32,11 +32,11 @@
 - #### To run them with `yarn`, use `$ yarn {script-name}`
 
 ```json
-    // runs the backend dev server with hot refresh :heart_eyes:
+    // runs the backend dev server with hot refresh 
     "dev-backend": "nodemon --quiet backend/entry.ts",
-    // runs the frontend dev server, with hot refresh :raised_hands:
+    // runs the frontend dev server, with hot refresh 
     "dev-frontend": "vite",
-    // runs the previous to commands concurrently, which means hot refresh for both :raised_hands:
+    // runs the previous to commands concurrently, which means hot refresh for both 
     "dev": "concurrently \"yarn run dev-frontend\" \"yarn run dev-backend\"",
     // builds the backend to build folder
     "build-backend": "cd backend && tsc",
