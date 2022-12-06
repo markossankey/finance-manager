@@ -1,7 +1,8 @@
 import express, { RequestHandler } from "express";
+import { OAuth2Client } from "google-auth-library";
 // TODO: add OAuth2Client and checks https://developers.google.com/identity/gsi/web/guides/verify-google-id-token#using-a-google-api-client-library
 const router = express.Router();
-
+const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 const verifyIsProvidedByGoogle: RequestHandler = (req, res, next) => {
   const { body, cookies } = req;
   if (!cookies || !cookies.g_csrf_token) {
