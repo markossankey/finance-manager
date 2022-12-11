@@ -1,7 +1,6 @@
 import cors from "cors";
 import * as dotenv from "dotenv";
 import express from "express";
-import { verifyToken } from "./middleware/auth";
 import router from "./routes";
 import cookieParser = require("cookie-parser");
 
@@ -30,7 +29,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // routes -- first verifies token, then goes to api
-app.use("/api", verifyToken, router);
+app.use("/api", router);
 
 // check to determine whether the fronted should be served from this server or from its own server
 if (isProd) {

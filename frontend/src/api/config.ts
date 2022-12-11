@@ -5,7 +5,7 @@ import.meta.env.PROD;
 // baseURL needs to be set to backend port when running in dev
 const environmentConfig: AxiosRequestConfig = import.meta.env.DEV
   ? {
-      baseURL: `http://localhost:${import.meta.env.VITE_DEV_BACKEND_PORT}`,
+      baseURL: `http://localhost:${import.meta.env.VITE_DEV_BACKEND_PORT}/api`,
     }
   : {};
 

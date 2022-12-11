@@ -2,30 +2,36 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ConfigProvider } from "antd";
 import { ConfigProviderProps } from "antd/es/config-provider";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import "./App.css";
 import { UserContextProvider } from "./context/User";
-import { Home } from "./pages/Home";
+import { Dashboard } from "./pages/Dashboard";
+import { dashboardRoutes } from "./pages/Dashboard/routes";
 import { Login } from "./pages/Login";
-import { SignUp } from "./pages/SignUp";
+import { loginRoutes } from "./pages/Login/routes";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: { staleTime: 30 * 1000 },
+  },
+});
 
-const router = createBrowserRouter([
-  { path: "/", element: <Home /> },
-  { path: "/sign-up", element: <SignUp /> },
-  { path: "/login", element: <Login /> },
+const routes = createBrowserRouter([
+  { path: "/", element: <Login />, children: loginRoutes },
+  {
+    path: "/dashboard",
+    element: <Dashboard />,
+    children: dashboardRoutes,
+  },
 ]);
-const theme: ConfigProviderProps["theme"] = {
-  token: { colorText: "#FFFFF", colorBgContainer: "#242424" },
-};
+
+const theme: ConfigProviderProps["theme"] = {};
 
 function App() {
   return (
-    <div className="App">
+    <div>
       <QueryClientProvider client={queryClient}>
         <ConfigProvider theme={theme}>
           <UserContextProvider>
-            <RouterProvider router={router} />
+            <RouterProvider router={routes} />
           </UserContextProvider>
         </ConfigProvider>
       </QueryClientProvider>

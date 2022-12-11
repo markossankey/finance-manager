@@ -3,18 +3,18 @@ import { useLocation } from "react-router-dom";
 
 const { Item: FormItem } = Form;
 
-export const SignUp = () => {
+export const Register = () => {
   const { state } = useLocation();
-  const { firstName, lastName, email, sub } = state;
+  const { firstName, lastName, email, sub } = state ?? {};
 
   return (
-    <div>
+    <div style={{ width: "50%" }}>
       <h2>Sign-up</h2>
       <form
         method="POST"
         action={`http://localhost:${
           import.meta.env.VITE_DEV_BACKEND_PORT
-        }/api/register`}
+        }/api/auth/register`}
       >
         <FormItem
           label="First Name"
@@ -68,11 +68,7 @@ export const SignUp = () => {
             defaultValue={sub}
           />
         </FormItem>
-        <Button
-          htmlType="submit"
-          shape="round"
-          style={{ width: "100%", marginTop: "2rem" }}
-        >
+        <Button htmlType="submit" style={{ width: "100%", marginTop: "2rem" }}>
           Sign-up
         </Button>
       </form>

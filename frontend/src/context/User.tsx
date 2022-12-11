@@ -12,8 +12,8 @@ export const UserContext = createContext<UserContextType>(
 );
 
 export const UserContextProvider = ({ children }: { children: ReactNode }) => {
-  let [userJwt, setUserJwt, removeUserJwt] = useLocalStorage("user.sid");
-  let queries = useQueryClient();
+  const [userJwt, setUserJwt, removeUserJwt] = useLocalStorage("user.sid");
+  const queries = useQueryClient();
 
   const isLoggedIn = userJwt ? true : false;
 

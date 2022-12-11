@@ -1,8 +1,7 @@
-import { Button } from "antd";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { post } from "../api/axios";
-import { UserContext } from "../context/User";
+import { post } from "../../api/config";
+import { UserContext } from "../../context/User";
 
 declare var google: any;
 
@@ -13,7 +12,7 @@ export const GoogleSignIn = () => {
 
   const handleGoogleResponse = async (response: any) => {
     const { data, status } = await post(
-      "/api/auth/login",
+      "/auth/login",
       { response },
       {
         // need otherwise axios doesn't allow re routing for 302 status
@@ -22,12 +21,12 @@ export const GoogleSignIn = () => {
         },
       }
     );
-    console.log("google callback", { data, status });
     // user doesn't exist
     if (status === 302) {
-      navigate("/sign-up", { state: data });
+      navigate("/register", { state: data });
     } else {
       login(data.token);
+      navigate("/dashboard");
     }
   };
 
@@ -41,8 +40,7 @@ export const GoogleSignIn = () => {
   }, []);
 
   useEffect(() => {
-    console.log(isLoggedIn);
-    if (!isLoggedIn && isGoogleLoaded) {
+    if (isGoogleLoaded) {
       google.accounts.id.renderButton(
         document.getElementById("google-sign-in"),
         {
@@ -53,13 +51,5 @@ export const GoogleSignIn = () => {
     }
   }, [isLoggedIn, isGoogleLoaded]);
 
-  return (
-    <>
-      {isLoggedIn ? (
-        <Button onClick={() => logout()}>Logout</Button>
-      ) : (
-        <div id="google-sign-in"></div>
-      )}
-    </>
-  );
+  return <div id="google-sign-in" style={{ width: "16rem" }} />;
 };

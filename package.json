@@ -18,9 +18,10 @@
     "prod": "NODE_ENV=production node build/entry.js",
     "debug-build": "NODE_ENV=production DEBUG=* node build/entry.js",
     "db-reset": "yarn prisma migrate reset",
+    "db-reset-hard": "yarn prisma migrate reset && yarn run db-push",
     "db-migrate": "yarn prisma migrate",
     "db-format": "yarn prisma format",
-    "db-update-remote": "yarn prisma db push",
+    "db-push": "yarn prisma db push",
     "db-open": "yarn prisma studio"
   },
   "devDependencies": {
