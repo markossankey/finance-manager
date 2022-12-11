@@ -9,7 +9,7 @@ export const Dashboard = () => {
   return (
     <Layout hasSider style={{ height: "100vh" }}>
       <Sidebar />
-      <Content>
+      <Content style={{ overflow: "scroll" }}>
         <Outlet />
       </Content>
     </Layout>
