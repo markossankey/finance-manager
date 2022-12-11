@@ -1,6 +1,7 @@
 import cors from "cors";
 import * as dotenv from "dotenv";
 import express from "express";
+import { verifyToken } from "./middleware/auth";
 import router from "./routes";
 import cookieParser = require("cookie-parser");
 
@@ -17,20 +18,19 @@ const frontendUrl = `http://localhost:${frontendPort}`;
 if (!isProd) {
   app.use(cors({ origin: frontendUrl }));
 }
+app.use((req, res, next) => {
+  console.log("\n\n");
+  console.log("\x1b[1m", `incoming request: ${req.url}`);
+  return next();
+});
 
 // helpers middleware
-app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// routes
-app.use("/api", router);
-
-// dev util
-app.use((req, res, next) => {
-  const { url, params, body } = req;
-  console.log("\n", url, { params, body }, "\n");
-  next();
-});
+// routes -- first verifies token, then goes to api
+app.use("/api", verifyToken, router);
 
 // check to determine whether the fronted should be served from this server or from its own server
 if (isProd) {
@@ -42,5 +42,5 @@ if (isProd) {
 }
 
 app.listen(port, () => {
-  console.log(`\nServer is running on http://localhost:${port}.\n`);
+  console.log("\x1b[32m", `Server is running on http://localhost:${port}.`);
 });

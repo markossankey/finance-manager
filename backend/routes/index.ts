@@ -1,24 +1,15 @@
-import { PrismaClient } from "@prisma/client";
-import express from "express";
+import { Router } from "express";
 import { default as authRoutes } from "./auth";
+import { default as financeRoutes } from "./finance";
 
-const router = express.Router();
+const router = Router();
 
-const prisma = new PrismaClient();
+router.use("/finance", financeRoutes);
+router.use("/auth", authRoutes);
 
-router.use("/login", authRoutes);
-
-router.get("/router", (req, res) => {
-  res.send("test backend");
+// just for testing, can be removed but needs to be removed on FE as well
+router.get("/test", (req, res) => {
+  res.send("authenticated");
 });
 
-router.get("/test-prisma", async (req, res) => {
-  const allUsers = await prisma.user.findMany({
-    include: {
-      posts: true,
-      profile: true,
-    },
-  });
-  res.send({ data: allUsers });
-});
 export default router;
