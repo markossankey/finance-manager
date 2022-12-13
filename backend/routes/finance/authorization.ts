@@ -12,8 +12,8 @@ router.get("/", async (req, res, next) => {
     client_name: "Finance Manager",
     country_codes: [CountryCode.Us],
     language: "en",
-    user: { client_user_id: "" + user?.id },
-    products: [Products.Transactions],
+    user: { client_user_id: "" + user?.id, email_address: user?.email },
+    products: [Products.Transactions, Products.Auth],
     webhook: "http://localhost:8000/api/finances/token/public/exchange",
   };
 
@@ -23,14 +23,13 @@ router.get("/", async (req, res, next) => {
 });
 
 router.get("/token/public/exchange", async (req, res, next) => {
-  console.log("in /token/public/exchange");
   const { public_token } = req.query;
   const {
     data: { access_token, item_id },
   } = await plaid.itemPublicTokenExchange({
     public_token: public_token as string,
   });
-  console.log({ access_token });
+
   const item = await prisma.plaid_Item.create({
     data: { access_token, plaid_item_id: item_id, userId: req.user.id },
   });

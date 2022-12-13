@@ -5,18 +5,27 @@ import prisma from "../../lib/prisma";
 const router = Router();
 
 router.get("/", async (req, res, next) => {
-  console.log("stuff");
-  const item = await prisma.plaid_Item.findFirst({
+  const items = await prisma.plaid_Item.findMany({
     where: { user: req.user },
   });
-  if (!item) {
+
+  if (items.length < 1) {
     return res.status(404).json({ error: "No items found for this user" });
   }
 
-  const plaidResponse = await plaid.accountsGet({
-    access_token: item?.access_token,
-  });
+  const promises = items.map(({ access_token }) =>
+    plaid.accountsGet({
+      access_token,
+    })
+  );
 
-  return res.status(200).json({ ...plaidResponse.data });
+  const accounts: any[] = await Promise.all(promises).then((responses) =>
+    responses.reduce(
+      (acc, response) => [...acc, ...response.data.accounts],
+      [] as any[]
+    )
+  );
+
+  return res.status(200).json({ accounts });
 });
 export default router;

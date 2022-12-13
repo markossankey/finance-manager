@@ -5,7 +5,6 @@ import prisma from "../../lib/prisma";
 const router = Router();
 
 router.get("/", async (req, res, next) => {
-  console.log("stuff");
   const item = await prisma.plaid_Item.findFirst({
     where: { user: req.user },
   });

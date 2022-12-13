@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { default as accountRoutes } from "./accounts";
-import { default as financeAuthRoutes } from "./auth";
+import { default as financeAuthRoutes } from "./authorization";
 import { default as transactionRoutes } from "./transactions";
 
 const router = Router();
